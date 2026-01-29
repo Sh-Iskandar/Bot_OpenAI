@@ -2,6 +2,10 @@ import os
 from telegram import Update
 from telegram.ext import Application, MessageHandler, ContextTypes, filters
 from openai import OpenAI
+from flask import Flask
+
+app = Flask(__name__)
+
 
 OPENAI_KEY = os.environ["OPENAI_KEY"]
 BOT_TOKEN = os.environ["BOT_TOKEN"]
@@ -26,3 +30,7 @@ async def handler(request):
     await app.initialize()
     await app.process_update(Update.de_json(await request.json(), app.bot))
     return {"status": "ok"}
+
+
+if __name__ == "__main__":
+    app.run(port=5000)
